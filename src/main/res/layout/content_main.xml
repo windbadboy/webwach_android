@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.badboy.webservice.MainActivity"
+    tools:showIn="@layout/activity_main">
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="重庆市第十三人民医院值班记录系统"
+        android:textSize="16sp"
+        />
+    <EditText
+        android:id="@+id/userid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:hint="用户ID" />
+    <EditText
+        android:id="@+id/pwd"
+        android:layout_below="@id/userid"
+        android:hint="密码"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/login"
+        android:layout_below="@id/pwd"
+        android:text="登录"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <CheckBox
+        android:id="@+id/remember_me"
+        android:text="记住我"
+        android:layout_below="@id/pwd"
+        android:layout_toLeftOf="@id/login"
+        android:layout_marginRight="20dp"
+        android:layout_alignBaseline="@id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:paddingBottom="15dp"
+        android:id="@+id/suggests"
+        android:text="V1.1 请反馈您的使用意见"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/copyrights"
+        android:text="维护人员:Ted Chen(短号:666666)"
+        android:layout_above="@id/suggests"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

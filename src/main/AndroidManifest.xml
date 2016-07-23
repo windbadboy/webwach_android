@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.badboy.webservice">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/thirteen"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:label="十三院值班查询"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainFrame">
+
+        </activity>
+        <service android:name=".NotificationService"
+
+            >
+
+        </service>
+        <receiver android:name=".AlarmReceiver">
+
+        </receiver>
+        <activity android:name=".NotificationActivity"></activity>
+        <activity android:name=".ShowNote"></activity>
+        <activity android:name=".writenote"></activity>
+        <activity android:name=".MyDuty"></activity>
+    </application>
+</manifest>
