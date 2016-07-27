@@ -4,14 +4,23 @@
     android:layout_height="match_parent">
 <TextView
     android:id="@+id/todayduty"
-    android:text="今日行政值班人员"
+    android:text="今日值班人员"
     android:textSize="18sp"
     android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/todaydutyinfo"
+        android:text="角色               姓名              短号"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/todayduty"
+        />
     <ListView
         android:id="@+id/dutylv"
-        android:layout_below="@id/todayduty"
+        android:layout_below="@id/todaydutyinfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -48,5 +57,18 @@
             android:textColor="#ffffff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </RelativeLayout>
+
+
+
+
+        </RelativeLayout>
+    <TextView
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/todaypeople"
+        android:text="今日值班人员"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

@@ -49,7 +49,7 @@
     <TextView
         android:paddingBottom="15dp"
         android:id="@+id/suggests"
-        android:text="V1.1 请反馈您的使用意见"
+        android:text="V1.12 请反馈您的使用意见"
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:layout_width="match_parent"

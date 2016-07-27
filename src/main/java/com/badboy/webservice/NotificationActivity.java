@@ -145,7 +145,7 @@ public class NotificationActivity extends Activity{
                                 break;
                             case XmlPullParser.END_TAG:// 结束元素事件
                                 if (parser.getName().equalsIgnoreCase("loginresult")) {
-                                        users templist = new users(userid, username,"已读("+checktime+")");
+                                        users templist = new users(userid, username,"已读("+checktime+")","","");
                                         mylist.add(templist);
                                         j++;
 

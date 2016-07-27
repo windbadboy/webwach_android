@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
 import org.xmlpull.v1.XmlPullParser;
 
 import java.io.InputStream;
@@ -48,11 +49,13 @@ public class MainFrame extends Activity {
         }
     };
     private ProgressDialog pdialog;
+    private TextView todayduty,todaypeople;
     private List<users> usersList=new ArrayList<users>();
     private ImageView numbersicon;
     private TextView mynum;
     private ListView lv,shownote;
     private TextView userid,username,telshort;
+    List<users> mylist=new ArrayList<users>();
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -103,13 +106,15 @@ public class MainFrame extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         lv=(ListView)findViewById(R.id.dutylv);
-        userid=(TextView)findViewById(R.id.showuid);
+      //  userid=(TextView)findViewById(R.id.showuid);
         username=(TextView)findViewById(R.id.showuname);
         numbersicon=(ImageView)findViewById(R.id.numbersicon);
         mynum=(TextView)findViewById(R.id.numbers);
         telshort=(TextView)findViewById(R.id.showtelshort);
-
+        todayduty=(TextView)findViewById(R.id.todayduty);
         pdialog=ProgressDialog.show(MainFrame.this,"加载","正在加载数据...",true,false);
+        todaypeople=(TextView)findViewById(R.id.todaypeople);
+        gettodaypeople();
         getusers();
         Intent intent = new Intent(this, NotificationService.class);
         startService(intent);
@@ -180,11 +185,20 @@ public class MainFrame extends Activity {
             public void run() {
 
                 getXml(2);
+               // getXml(5);
+            }
+        }).start();
+    }
+    public void gettodaypeople(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getXml(3);
             }
         }).start();
     }
     public void getXml(int mychoice){
-        List<users> mylist=new ArrayList<users>();
+
         String ServerUrl = "http://183.64.36.130:6666/webservice/WebService1.asmx";
         String soapAction="";
         switch(mychoice) {
@@ -200,7 +214,13 @@ public class MainFrame extends Activity {
 
 
             case 2:
-                soapAction = "http://tempuri.org/" + "gettodayduty";
+                soapAction = "http://tempuri.org/" + "gettodaydutybest";
+                break;
+            case 3:
+                soapAction = "http://tempuri.org/" + "gettodaypeople";
+                break;
+            case 5:
+                soapAction = "http://tempuri.org/" + "gettodaydutyweek";
                 break;
             default:
                 break;
@@ -227,6 +247,12 @@ public class MainFrame extends Activity {
                 requestData = soap + mreakString + soap2;
                 break;
             case 2:
+                soap2 = "</soap:Envelope>";
+                requestData = soap + mreakString + soap2;
+            case 3:
+                soap2 = "</soap:Envelope>";
+                requestData = soap + mreakString + soap2;
+            case 5:
                 soap2 = "</soap:Envelope>";
                 requestData = soap + mreakString + soap2;
         }
@@ -261,6 +287,9 @@ public class MainFrame extends Activity {
                 String username="";
                 String telshort="";
                 String pbdate="";
+                String tel="";
+                String pbrole="";
+                String zyrs="";
                 switch(mychoice) {
                     case 1:
                         while (eventType != XmlPullParser.END_DOCUMENT) {
@@ -277,11 +306,18 @@ public class MainFrame extends Activity {
                                     } else if (name.equalsIgnoreCase("telshort")) {
                                         telshort = parser.nextText();
 
+                                    }else if (name.equalsIgnoreCase("tel")) {
+                                        tel = parser.nextText();
+
+                                    }else if (name.equalsIgnoreCase("pbrole")) {
+                                        pbrole = parser.nextText();
+
                                     }
+
                                     break;
                                 case XmlPullParser.END_TAG:// 结束元素事件
                                     if (parser.getName().equalsIgnoreCase("Table")) {
-                                        users myuserinfo = new users(userid, username, telshort);
+                                        users myuserinfo = new users(userid, username, telshort,tel,pbrole);
                                         mylist.add(myuserinfo);
 
 
@@ -298,28 +334,59 @@ public class MainFrame extends Activity {
                                 case XmlPullParser.START_TAG:// 开始元素事件
                                     String name = parser.getName();
                                     if (name.equalsIgnoreCase("pbdate")) {
-                                        userid = parser.nextText();
+                                        pbdate = parser.nextText();
                                     } else if (name.equalsIgnoreCase("name")) {
                                         username = parser.nextText();
 
                                     } else if (name.equalsIgnoreCase("telshort")) {
                                         telshort = parser.nextText();
 
+                                    }else if (name.equalsIgnoreCase("tel")) {
+                                        tel = parser.nextText();
+
+                                    }else if (name.equalsIgnoreCase("pbrole")) {
+                                        pbrole = parser.nextText();
+
                                     }
                                     break;
                                 case XmlPullParser.END_TAG:// 结束元素事件
                                     if (parser.getName().equalsIgnoreCase("Table")) {
-                                        users myuserinfo = new users(userid, username, telshort);
-                                        users temp1=new users("值班日期","值班人","短号");
-                                        mylist.add(temp1);
-                                        mylist.add(myuserinfo);
+                                        if(pbrole.equals("2") || pbrole.equals("3")) {
+                                            users myuserinfo = new users("", username, telshort, tel, pbrole);
+
+                                            mylist.add(myuserinfo);
+                                        }
 
 
                                     }
                                     break;
                             }
+                            todayduty.setText("今日值班("+pbdate+")");
                             eventType = parser.next();
                         }
+                    case 3:
+                        while (eventType != XmlPullParser.END_DOCUMENT) {
+                            switch (eventType) {
+                                case XmlPullParser.START_DOCUMENT:// 文档开始事件,可以进行数据初始化处理
+                                    break;
+                                case XmlPullParser.START_TAG:// 开始元素事件
+                                    String name = parser.getName();
+                                    if (name.equalsIgnoreCase("zyrs")) {
+                                        zyrs = parser.nextText();
+                                    }
+                                    break;
+                                case XmlPullParser.END_TAG:// 结束元素事件
+                                    if (parser.getName().equalsIgnoreCase("Table")) {
+                                        todaypeople.setText("在院人数:"+zyrs);
+
+
+                                    }
+                                    break;
+                            }
+                            todayduty.setText("今日值班("+pbdate+")");
+                            eventType = parser.next();
+                        }
+
                 }
                 inputStream.close();
 

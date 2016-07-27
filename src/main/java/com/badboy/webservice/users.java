@@ -9,10 +9,15 @@ public class users {
     private String userid;
     private String username;
     private String telshort;
-    public users(String userid,String username,String telshort){
+    private String tel;
+    private String pbrole;
+
+    public users(String userid,String username,String telshort,String tel,String pbrole){
         this.userid=userid;
         this.username=username;
         this.telshort=telshort;
+        this.tel=tel;
+        this.pbrole=pbrole;
     }
     public String getid(){
         return userid;
@@ -23,6 +28,11 @@ public class users {
     public String getTelshort(){
         return telshort;
     }
+    public String getTel(){
+        return tel;
+    }
+    public String getPbrole(){return pbrole;}
+
 }
 
 
